@@ -1,0 +1,3 @@
+addEventListener('load', () => {
+	Game.init();
+});
