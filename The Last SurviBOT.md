@@ -1,1 +1,2 @@
-# Game.JS
+# The Last SurviBOT
+
