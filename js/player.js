@@ -27,6 +27,8 @@ class Player {
 		};
 
 		this.bullets = [];
+		this.bullets2 = [];
+		
 
 		this.setCotrols();
 
@@ -37,12 +39,19 @@ class Player {
 			left: {
 				pressed: false,
 			},
+			up: {
+				pressed: false,
+			},
+			
+			
 		};
 	}
+	
 
 	setCotrols() {
-		const { JUMP, SHOOT, LEFT, RIGHT } = this.game.keys;
+		const { JUMP, SHOOT, LEFT, RIGHT, UP } = this.game.keys;
 
+		
 		addEventListener('keydown', ({ code }) => {
 			switch (code) {
 				case JUMP:
@@ -57,7 +66,12 @@ class Player {
 				case LEFT:
 					this.controls.left.pressed = true;
 					break;
+				case UP: 
+				this.game.pressed = 'KeyG'
+				this.shootup();
+					break;	
 				case SHOOT:
+					this.game.pressed = 'KeyF'
 					this.shoot();
 					break;
 			}
@@ -71,6 +85,9 @@ class Player {
 				case LEFT:
 					this.controls.left.pressed = false;
 					break;
+				case UP: 
+				console.log('shootup');
+				    this.controls.up.pressed = false;	
 			}
 		});
 	}
@@ -94,18 +111,30 @@ class Player {
 
 		this.bullets = this.bullets.filter(
 			(bullet) => bullet.pos.x - bullet.radius < this.game.width
+			
 		);
+		
 
 		this.bullets.forEach((bullet) => {
 			bullet.draw();
 			bullet.move();
 		});
+		this.bullets2.forEach((bullet2) => {
+			bullet2.draw();
+			bullet2.move();
+		});
+		
 	}
 
 	shoot() {
 		this.bullets.push(new Bullet(this.game));
-	}
 
+		}
+	shootup() {
+			this.bullets2.push(new Bullet2(this.game));
+	
+			}
+	
 	animateSprite(frameCounter) {
 		if (frameCounter % 6 === 0) {
 			this.img.currentFrame++;
@@ -138,5 +167,7 @@ class Player {
 		this.pos.y += this.speed.y;
 
 		this.pos.x += this.speed.x;
+
+		
 	}
 }

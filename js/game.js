@@ -10,8 +10,9 @@ const Game = {
 		SHOOT: 'KeyF',
 		RIGHT: 'ArrowRight',
 		LEFT: 'ArrowLeft',
-		UP: 'ArrowUp'
+		UP: 'KeyG'
 	},
+	pressed:undefined,
 
 	init() {
 		const canvas = document.querySelector('canvas');
@@ -45,13 +46,16 @@ const Game = {
 			this.clear();
 
 			this.frameCounter++;
-			this.score += 0.01;
+		
+				this.score += 0.01;
 
+			
+			
 			if (this.velocity !== 0) {
 				this.progress++;
 			}
 
-			if (this.progress % 150 === 0) this.generateObstacle();
+			if (this.progress % 60 === 0) this.generateObstacle();
 
 			this.drawAll();
 			this.moveAll();

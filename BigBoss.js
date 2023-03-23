@@ -1,4 +1,4 @@
-class Obstacle {
+class Boss {
 	constructor(game) {
 		this.width = game.player.width / 2;
 		this.height = game.player.height * 0.8;
@@ -42,11 +42,5 @@ class Obstacle {
 
 	move() {
 		this.pos.x -= this.game.velocity;
-	}
-}
-class Nave extends Obstacle{
-	constructor(game){
-		super(game)
-
 	}
 }

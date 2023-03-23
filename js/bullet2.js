@@ -1,4 +1,4 @@
-class Bullet {
+class Bullet2 {
 	constructor(game) {
 		this.game = game;
 
@@ -38,7 +38,7 @@ class Bullet {
 			// }
 			// if (this.game.pressed == 'KeyF') {this.pos.x += this.speed.x;
 			// console.log('disparo normal')}
-			this.pos.x += this.speed.x;
+			this.pos.y -= this.speed.y;
 
 	
 	}
