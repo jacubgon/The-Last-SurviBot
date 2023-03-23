@@ -1,21 +1,43 @@
 class Player {
 	constructor(x, y, game) {
 		this.game = game;
+        //DESCOMENTAR PARA VOLVER AL ORIGINAL
+		// this.img = new Image();
+		// this.img.src = 'assets/run.png';
 
-		this.img = new Image();
-		this.img.src = 'assets/run.png';
+		// this.img.currentFrame = 0;
+		// this.img.frameCount = 8;
+		//AQUI VA LO NUEVO (BORRAR) --->
+		this.sprites = {
+			rightRun: {
+				img: createImage('assets/run.png'),
+				frames: 8,
+				frameIndex: 0,
+			},
+			leftRun: {
+				img: createImage('assets/LeftRobot.png'),
+				frames: 8,
+				frameIndex: 0,
+			},
+		};
+		this.currentSprite = this.sprites.rightRun;
 
-		this.img.currentFrame = 0;
-		this.img.frameCount = 8;
 
+      //<--- HASTA AQUI
 		this.width = 146 * 0.5;
 		this.height = 180 * 0.5;
 
 		this.y0 = game.height * 0.8;
+		this.x0 = game.width * 0.2 -200 ;
 
+        //DESCOMENTAR PARA VOLVER AL ORIGINAL
+		// this.x0 = game.width * 0.2;
 
-		this.x0 = game.width * 0.2;
-
+		// this.pos = {
+		// 	x: this.x0,
+		// 	y: this.y0,
+		// };
+		//ESTO ES NUEVO (BORRAR)
 		this.pos = {
 			x: this.x0,
 			y: this.y0,
@@ -94,20 +116,42 @@ class Player {
 
 	draw(frameCounter) {
 		const { ctx } = this.game;
+		//ESTO ES NUEVO(BORRAR)-->
+		if (this.controls.right.pressed) {
+			this.currentSprite = this.sprites.rightRun;
+		} else if (this.controls.left.pressed) {
+			this.currentSprite = this.sprites.leftRun;
+		}
+		//<-- HASTA AQUI
 
 		this.animateSprite(frameCounter);
-
+        //ORIGINAL, DESCOMENTAR
+		// ctx.drawImage(
+		// 	this.img,
+		// 	this.img.currentFrame * (this.img.width / this.img.frameCount),
+		// 	0,
+		// 	this.img.width / this.img.frameCount,
+		// 	this.img.height,
+		// 	this.pos.x,
+		// 	this.pos.y,
+		// 	this.width,
+		// 	this.height
+		// );
+		//ESTO ES NUEVO(BORRAR)
 		ctx.drawImage(
-			this.img,
-			this.img.currentFrame * (this.img.width / this.img.frameCount),
+			this.currentSprite.img,
+			this.currentSprite.frameIndex *
+				(this.currentSprite.img.width / this.currentSprite.frames),
 			0,
-			this.img.width / this.img.frameCount,
-			this.img.height,
+			this.currentSprite.img.width / this.currentSprite.frames,
+			this.currentSprite.img.height,
 			this.pos.x,
 			this.pos.y,
 			this.width,
 			this.height
 		);
+
+
 
 		this.bullets = this.bullets.filter(
 			(bullet) => bullet.pos.x - bullet.radius < this.game.width
@@ -135,12 +179,23 @@ class Player {
 	
 			}
 	
+	// animateSprite(frameCounter) {
+	// 	if (frameCounter % 6 === 0) {
+	// 		this.img.currentFrame++;
+
+	// 		if (this.img.currentFrame === this.img.frameCount) {
+	// 			this.img.currentFrame = 0;
+	// 		}
+	// 	}
+	// }
+
+	//ESTO ES NUEVO
 	animateSprite(frameCounter) {
 		if (frameCounter % 6 === 0) {
-			this.img.currentFrame++;
+			this.currentSprite.frameIndex++;
 
-			if (this.img.currentFrame === this.img.frameCount) {
-				this.img.currentFrame = 0;
+			if (this.currentSprite.frameIndex === this.currentSprite.frames) {
+				this.currentSprite.frameIndex = 0;
 			}
 		}
 	}

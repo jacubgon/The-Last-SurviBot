@@ -41,12 +41,9 @@ class Obstacle {
 	}
 
 	move() {
-		this.pos.x -= this.game.velocity;
+		if(this.pos.x -= this.game.velocity){
+        this.dx = this.dx++;
+		};
 	}
 }
-class Nave extends Obstacle{
-	constructor(game){
-		super(game)
 
-	}
-}

@@ -31,6 +31,9 @@ const Game = {
 
 		this.player = new Player(0, 0, this);
 		this.background = new Background(this);
+		this.boss = new Boss(0,0,this)
+		console.log(new Boss)
+		
 
 		this.obstacles = [];
 
@@ -72,12 +75,15 @@ const Game = {
 
 	drawAll() {
 		this.background.draw();
+		
 
 		this.obstacles.forEach((obstacle) => {
 			obstacle.draw(this.frameCounter);
 		});
 
 		this.player.draw(this.frameCounter);
+	
+		
 	},
 
 	moveAll() {
@@ -88,6 +94,8 @@ const Game = {
 		});
 
 		this.player.move(this.frameCounter);
+		// this.boss.move(this.frameCounter)
+		
 	},
 
 	clearObstacles() {
@@ -100,7 +108,7 @@ const Game = {
 		return this.obstacles.some(
 			(obstacle) =>
 				this.player.pos.x + this.player.width - 20 > obstacle.pos.x &&
-				this.player.pos.x < obstacle.pos.x + obstacle.width &&
+				this.player.pos.x < obstacle.pos.x + obstacle.width-50 &&
 				this.player.pos.y + this.player.height - 20 > obstacle.pos.y &&
 				this.player.pos.y < obstacle.pos.y + obstacle.height
 		);
