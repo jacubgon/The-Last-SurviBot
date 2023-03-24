@@ -32,7 +32,7 @@ const Game = {
 		this.player = new Player(0, 0, this);
 		this.background = new Background(this);
 		this.boss = new Boss(0,0,this)
-		console.log(new Boss)
+		console.log(this.boss)
 		
 
 		this.obstacles = [];
@@ -58,7 +58,7 @@ const Game = {
 				this.progress++;
 			}
 
-			if (this.progress % 120 === 0) this.generateObstacle();
+			if (this.progress % 90 === 0) this.generateObstacle();
 
 			this.drawAll();
 			this.moveAll();
@@ -82,6 +82,7 @@ const Game = {
 		});
 
 		this.player.draw(this.frameCounter);
+		this.boss.draw(this.frameCounter);
 	
 		
 	},
@@ -94,7 +95,7 @@ const Game = {
 		});
 
 		this.player.move(this.frameCounter);
-		// this.boss.move(this.frameCounter)
+		this.boss.move(this.frameCounter);
 		
 	},
 
@@ -127,6 +128,7 @@ const Game = {
 					this.obstacles = this.obstacles.filter((o) => o !== obstacle);
 					this.player.bullets = this.player.bullets.filter((b) => b !== bullet);
 				}
+				
 
 				return isCollision;
 			});

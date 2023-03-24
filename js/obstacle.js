@@ -14,6 +14,9 @@ class Obstacle {
 		this.img.src = 'assets/ladyZombieWalking.png';
 		this.img.currentFrame = 0;
 		this.img.frameCount = 10;
+		this.speed = {
+			x: 3,
+		}
 	}
 	draw(frameCounter) {
 		const { ctx } = this.game;
@@ -42,8 +45,9 @@ class Obstacle {
 
 	move() {
 		if(this.pos.x -= this.game.velocity){
-        this.dx = this.dx++;
+        this.speed = -this.speed++;
 		};
+		
 	}
 }
 

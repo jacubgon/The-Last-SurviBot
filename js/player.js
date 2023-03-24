@@ -21,8 +21,8 @@ class Player {
 		};
 		this.currentSprite = this.sprites.rightRun;
 
-		this.width = 146 * 0.5;
-		this.height = 180 * 0.5;
+		this.width = 246 * 0.5;
+		this.height = 280 * 0.5;
 
 		this.y0 = game.height * 0.8;
 		this.x0 = game.width * 0.2 -200 ;
@@ -180,7 +180,7 @@ class Player {
 			this.speed.x = 5;
 		} else if (this.controls.left.pressed && this.pos.x > this.x0) {
 			this.speed.x = -5;
-		   
+		
 		} else this.speed.x = 0;
 
 		if (this.controls.right.pressed && this.pos.x > 400) {

@@ -3,15 +3,15 @@ class Boss {
 	this.game = game;
 
 	this.img = new Image();
-	this.img.src = 'assets/run.png';
+	this.img.src = 'assets/ovni.png';
 
 	this.img.currentFrame = 0;
-	this.img.frameCount = 8;
+	this.img.frameCount = 1;
 
-	this.width = 146 * 0.5;
-	this.height = 180 * 0.5;
+	this.width = 246 ;
+	this.height = 280 ;
 
-	this.y0 = 0;
+	this.y0 = 50;
 
 
 	this.x0 = 0;
@@ -23,6 +23,40 @@ class Boss {
 
 	this.speed = {
 		x: 5,
-		y: 0,
+		
 	};
-}}
+}
+draw(frameCounter) {
+	const { ctx } = this.game;
+
+	this.animateSprite(frameCounter);
+
+	ctx.drawImage(
+		this.img,
+		this.img.currentFrame * (this.img.width / this.img.frameCount),
+		0,
+		this.img.width / this.img.frameCount,
+		this.img.height,
+		this.pos.x,
+		this.pos.y,
+		this.width,
+		this.height,
+	);}
+	animateSprite(frameCounter) {
+		if (frameCounter % 6=== 0) {
+			this.img.currentFrame++;
+
+			if (this.img.currentFrame === this.img.frameCount) {
+				this.img.currentFrame = 0;
+			}		}
+	}
+	move() {
+		if(this.pos.x + this.width >this.game.width|| this.pos.x < 0){
+		this.speed.x *= -1;
+		}
+		
+		
+        this.pos.x += this.speed.x;
+		
+	}
+}
