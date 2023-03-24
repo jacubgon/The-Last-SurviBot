@@ -58,7 +58,7 @@ const Game = {
 				this.progress++;
 			}
 
-			if (this.progress % 60 === 0) this.generateObstacle();
+			if (this.progress % 120 === 0) this.generateObstacle();
 
 			this.drawAll();
 			this.moveAll();
