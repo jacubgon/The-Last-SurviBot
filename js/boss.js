@@ -10,6 +10,7 @@ class Boss {
 
 	this.width = 350 ;
 	this.height = 280 ;
+	this.health = 5;
 
 	this.y0 = 50;
 
@@ -25,6 +26,8 @@ class Boss {
 		x: 5,
 		
 	};
+	this.bulletsboss = [];
+	console.log(this.bulletsboss)
 }
 draw(frameCounter) {
 	const { ctx } = this.game;
@@ -41,8 +44,26 @@ draw(frameCounter) {
 		this.pos.y,
 		this.width,
 		this.height,
-	);}
-	animateSprite(frameCounter) {
+	);
+
+	this.bulletsboss = this.bulletsboss.filter((bulletboss) => bulletboss.pos.y - bulletboss.radius);
+
+	this.bulletsboss.forEach((bulletboss) => {
+	
+		bulletboss.draw();
+		bulletboss.move();
+		
+	
+	});
+}
+
+	shootboss() {
+		
+		this.bulletsboss.push(new BulletBoss(this.game));
+		console.log('el boss esta disparando')
+    }
+
+    animateSprite(frameCounter) {
 		if (frameCounter % 6=== 0) {
 			this.img.currentFrame++;
 
@@ -55,8 +76,7 @@ draw(frameCounter) {
 		this.speed.x *= -1;
 		}
 		
-		
-        this.pos.x += this.speed.x;
+		this.pos.x += this.speed.x;
 		
 	}
 }

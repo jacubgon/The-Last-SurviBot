@@ -22,8 +22,8 @@ class BulletBoss {
 
 		ctx.beginPath();
 		ctx.save();
-		ctx.fillStyle = 'blue';
-		ctx.arc(this.pos.x-20, this.pos.y+50, this.radius, 0, Math.PI * 2);
+		ctx.fillStyle = 'green';
+		ctx.arc(this.pos.x-150, this.pos.y+200, this.radius, 0, Math.PI * 2);
 		ctx.fill();
 		ctx.restore();
 		ctx.closePath();
@@ -31,7 +31,8 @@ class BulletBoss {
 
 	move() {
 		
-			this.pos.y -= this.speed.y;
+			this.pos.y += this.speed.y;
+			
 
 	
 	}

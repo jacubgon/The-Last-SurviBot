@@ -12,20 +12,85 @@
 		<script src="js/obstacle.js"></script>
 		<script src="js/bullet.js"></script>
 		<script src="js/bullet2.js"></script>
+		<script src="js/bulletBoss.js"></script>
 		<script src="js/boss.js"></script>
 		<script src="js/utils.js"></script>
+	
 		
 
 		<style>
 			body {
 				margin: 0;
+				background-image: url(assets/fondito-weno.jpg) ;
+
 			}
 			canvas {
-				display: block;
+				display: none;
+			}
+			main {
+				background-image: url(assets/fondito-weno.jpg) ;
+				background-color: antiquewhite;
+				padding: 30px;
+				margin: auto;
+			}
+			h1 {
+				color:rgb(86, 1, 86);
+				text-align: center;
+			}
+			h2{
+				color:rgb(86, 1, 86);
+				text-align: center;
+			}
+			.class{
+				text-align: center;
+			}
+			ul{
+				color:rgb(86, 1, 86);
+				text-align: center;
+				list-style: none;
+			}
+			.row{
+				padding: 20px;
+				text-align: center;
+			}
+			#Startbtn{
+				color: rgb(86, 1, 86);
+				padding: 20px;
+				border-radius: 5px;
+				background-color: rgba(232, 106, 252, 0.621);
+				box-shadow: 5;
 			}
 		</style>
 		<title>Document</title>
 	</head>
+	<main>
+		<h1>The Last SurviBot</h1>
+		<p>En un futuro no muy lejano, la humanidad enfrenta su peor pesadilla: una pandemia global que ha diezmado la población mundial. Los sobrevivientes luchan por encontrar una cura y reconstruir lo que queda de la civilización. Pero mientras tanto, un nuevo peligro emerge del horizonte. <br>
+
+			Una lluvia de meteoritos impacta la Tierra, trayendo consigo una horda de robots extraterrestres invasores. Estos robots están programados para destruir todo lo que encuentran a su paso, incluyendo a los pocos humanos que quedan. La humanidad se encuentra en peligro inminente, y parece que nada puede detener a los invasores. <br>
+			
+			Sin embargo, hay un rayo de esperanza. Un robot experimental llamado "Survibot" ha sido desarrollado para enfrentar situaciones extremas como esta. Este robot es capaz de luchar contra los invasores y encontrar una manera de salvar a los humanos que quedan. <br>
+			
+			El jugador toma el control del Survibot y se sumerge en un mundo apocalíptico lleno de peligros. Los invasores son cada vez más poderosos y están evolucionando constantemente para adaptarse a las tácticas del robot. El jugador debe usar todas las habilidades del Survibot para derrotar a los enemigos y encontrar una cura para la pandemia que asola la Tierra. <br>
+			
+			Pero el tiempo corre en su contra. La humanidad está en su momento más vulnerable y el apocalipsis se acerca rápidamente. ¿Podrá el Survibot salvar a la humanidad y restaurar la civilización antes de que sea demasiado tarde? El destino del mundo está en tus manos en "The Last Survibot".</p>
+			
+			<h2>Controles</h2>
+			<ul class="controles">
+				<li>Direccion: < LEFT || RIGHT ></li>
+				<li>Salto: SPACE</li>
+				<li>Disparo: F</li>
+				<li>Disparo vertical: G</li>
+			</ul>
+
+		<p class="row"><button id="Startbtn">Comenzar</button></p>
+	
+	
+	
+	
+	
+	
+	</main>
 	<body>
 		<canvas></canvas>
 	</body>

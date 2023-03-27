@@ -13,11 +13,12 @@ const Game = {
 		UP: 'KeyG'
 	},
 	pressed:undefined,
-	bossAparece: 3000,
+	
 
 
 	init() {
 		const canvas = document.querySelector('canvas');
+		canvas.style.display = 'block'
 
 		canvas.width = this.width;
 		canvas.height = this.height;
@@ -28,40 +29,54 @@ const Game = {
 		this.start();
 	},
 
-	setup() {
+	setup() {  
 		console.log('Estableciendo valores iniciales para el juego');
 
 		this.player = new Player(0, 0, this);
 		this.background = new Background(this);
 		this.boss = new Boss(0,0,this)
-		console.log(this.boss)
+		this.bso = new Audio ('assets/stranger.mp3')
+		this.bso.play()
+		this.bsoBoss = new Audio ('assets/boss.mp3')
+		this.bsoGameOver = new Audio('assets/game over.wav')
+		this.bsoVictory = new Audio('assets/victoria.mp3')
+		
 		
 
 		this.obstacles = [];
 
 		this.score = 0;
+		let collisionCount = 0;
 
 		this.scoreBoard.init(this.ctx);
+		
 	},
 
 	start() {
 		this.frameCounter = 0;
 		this.progress = 0;
-		this.bossAparece += Date.now(); 
+
+
 		this.animationLoopId = setInterval(() => {
 			this.clear();
 
 			this.frameCounter++;
 		
 				this.score += 0.01;
-
-			
+            //ESTO FUNCIONA, SE PARA EL AVANCE DESPUES DE CONSEGUIR 10 PUNTOS
+			if(this.score > 10){
+				this.velocity = 0;
+			}
+			if(this.score > 10){
+				this.bso.pause()
+				this.bsoBoss.play()
+			}
 			
 			if (this.velocity !== 0) {
 				this.progress++;
 			}
 
-			if (this.progress % 90 === 0) this.generateObstacle();
+			if (this.progress %  60 === 0) this.generateObstacle();
 
 			this.drawAll();
 			this.moveAll();
@@ -70,10 +85,14 @@ const Game = {
 
 			if (this.isCollision()) this.gameOver();
 			
-			if (this.isCollisionBullet2()) this.gameOver();
+			if (this.isCollisionBulletBoss()) this.gameOver();
+		
+			if (this.isCollisionBullet2()) this.youWin();
+		
 
 			if (this.isCollisionBullet()) console.log('Colisión bullet');
 			if (this.isCollisionBullet2()) console.log('Colisión bullet2 con boss');
+			
 
 
 			this.clearObstacles();
@@ -81,17 +100,24 @@ const Game = {
 	},
 
 	drawAll() {
-		this.background.draw();
+		this.background.draw();  
 		
 		this.obstacles.forEach((obstacle) => {
 			obstacle.draw(this.frameCounter);
 		});
-        // this.boss.draw(this.frameCounter);
-		if (Date.now() > this.bossAparece) {
+		
+		if(this.score > 10){
 			this.boss.draw(this.frameCounter);
-		}
-		this.player.draw(this.frameCounter);
 			
+			if (this.frameCounter % 50 === 0) this.boss.shootboss();
+
+		}
+
+		this.player.draw(this.frameCounter);
+
+		
+		
+
 	},
 
 	moveAll() {
@@ -102,6 +128,11 @@ const Game = {
 		});
 
 		this.player.move(this.frameCounter);
+		
+		if(this.score > 10){
+			this.player.movefinal(this.frameCounter)
+		};
+		
 		this.boss.move(this.frameCounter);
 		
 	},
@@ -115,9 +146,9 @@ const Game = {
 	isCollision() {
 		return this.obstacles.some(
 			(obstacle) =>
-				this.player.pos.x + this.player.width - 20 > obstacle.pos.x &&
+				this.player.pos.x + this.player.width - 40 > obstacle.pos.x &&
 				this.player.pos.x < obstacle.pos.x + obstacle.width-50 &&
-				this.player.pos.y + this.player.height - 20 > obstacle.pos.y &&
+				this.player.pos.y + this.player.height - 40 > obstacle.pos.y &&
 				this.player.pos.y < obstacle.pos.y + obstacle.height
 		);
 	},
@@ -128,7 +159,7 @@ const Game = {
 				const isCollision =
 					bullet.pos.x-40 + bullet.radius > obstacle.pos.x &&
 					bullet.pos.x-40 - bullet.radius < obstacle.pos.x + obstacle.width &&
-					bullet.pos.y+50 + bullet.radius > obstacle.pos.y &&
+					bullet.pos.y+30 + bullet.radius > obstacle.pos.y &&
 					bullet.pos.y+50 - bullet.radius < obstacle.pos.y + obstacle.height;
 
 				if (isCollision) {
@@ -148,11 +179,32 @@ const Game = {
 				bullet2.pos.x - bullet2.radius > this.boss.pos.x &&
 				bullet2.pos.x + bullet2.radius < this.boss.pos.x + this.boss.width &&
 				bullet2.pos.y - bullet2.radius > this.boss.pos.y &&
-				bullet2.pos.y + bullet2.radius < this.boss.pos.y-100 + this.boss.height;
+				bullet2.pos.y + bullet2.radius < this.boss.pos.y-120 + this.boss.height;
 	
 			if (isCollision) {
 				this.boss.health -= 1;
 				this.player.bullets2 = this.player.bullets2.filter((b) => b !== bullet2);
+			}
+	
+			return isCollision;
+		});
+	},
+	
+
+
+
+
+	isCollisionBulletBoss() {
+		return this.boss.bulletsboss.some((bulletboss) => {
+			const isCollision =
+				bulletboss.pos.x - bulletboss.radius > this.player.pos.x &&
+				bulletboss.pos.x + bulletboss.radius < this.player.pos.x + this.player.width &&
+				bulletboss.pos.y - bulletboss.radius > this.player.pos.y &&
+				bulletboss.pos.y  + bulletboss.radius > this.player.pos.y - this.player.height;
+	
+			if (isCollision) {
+				console.log('estoy colisionando bulletboss')
+				this.boss.bulletsboss = this.boss.bulletsboss.filter((b) => b !== bulletboss);
 			}
 	
 			return isCollision;
@@ -168,7 +220,19 @@ const Game = {
 	},
 
 	gameOver() {
+		this.bsoGameOver.play()
+		this.bso.pause()
+		this.bsoBoss.pause()
+		
 		clearInterval(this.animationLoopId);
-		if (confirm('FIN DEL JUEGO. ¿VOLVER A EMPEAZAR?')) this.init();
+		if (confirm('FIN DEL JUEGO. ¿VOLVER A EMPEZAR?')) this.init();
+	},
+	youWin(){
+		this.bso.pause()
+		this.bsoBoss.pause()
+		this.bsoVictory.play()
+		clearInterval(this.animationLoopId);
+		if (confirm('ENHORABUENA! HAS GANADO')) this.init();
+
 	},
 };

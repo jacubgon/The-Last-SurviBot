@@ -17,6 +17,12 @@ class Player {
 				img: createImage('assets/Idle.png'),
 				frames: 10,
 				frameIndex: 0,
+			},
+			disparo: { 
+			img: createImage('assets/shoot.png'),
+			frames: 5,
+			frameIndex: 0,
+
 			}
 		};
 		this.currentSprite = this.sprites.rightRun;
@@ -39,8 +45,7 @@ class Player {
 
 		this.bullets = [];
 		this.bullets2 = [];
-		
-
+	
 		this.setCotrols();
 
 		this.controls = {
@@ -80,10 +85,13 @@ class Player {
 				case UP: 
 				this.game.pressed = 'KeyG'
 				this.shootup();
+				this.disparo.play()
 					break;	
 				case SHOOT:
 					this.game.pressed = 'KeyF'
 					this.shoot();
+		            this.disparo = new Audio ('assets/disparo.mp3')
+					this.disparo.play()
 					break;
 			}
 		});
@@ -97,8 +105,7 @@ class Player {
 					this.controls.left.pressed = false;
 					break;
 				case UP: 
-				console.log('shootup');
-				    this.controls.up.pressed = false;	
+				this.controls.up.pressed = false;	
 			}
 		});
 	}
@@ -149,10 +156,12 @@ class Player {
 
 	shoot() {
 		this.bullets.push(new Bullet(this.game));
+		console.log('player esta disparando')
 
 		}
 	shootup() {
 			this.bullets2.push(new Bullet2(this.game));
+			console.log('estoy disparando arriba')
 	
 			}
 	
@@ -167,7 +176,7 @@ class Player {
 	}
 
 	move() {
-		const gravity = 0.5;
+		const gravity = 0.4;
 
 		if (this.pos.y < this.y0) {
 			this.speed.y += gravity;
@@ -176,7 +185,7 @@ class Player {
 			this.pos.y = this.y0;
 		}
 
-		if (this.controls.right.pressed && this.pos.x < 400) {
+		if (this.controls.right.pressed && this.pos.x< 400) {
 			this.speed.x = 5;
 		} else if (this.controls.left.pressed && this.pos.x > this.x0) {
 			this.speed.x = -5;
@@ -187,9 +196,36 @@ class Player {
 			this.game.velocity = 5;
 		} else this.game.velocity = 0;
 		this.pos.y += this.speed.y;
+		
+	
 
 		this.pos.x += this.speed.x;
 
 		
+	}
+	movefinal(){
+		const gravity = 0.3;
+
+		if (this.pos.y < this.y0) {
+			this.speed.y += gravity;
+		} else {
+			this.speed.y = 0;
+			this.pos.y = this.y0;
+		}
+		if (this.controls.right.pressed && this.pos.x<this.game.width - this.x0) {
+			this.speed.x = 5;
+		} else if (this.controls.left.pressed && this.pos.x > this.x0 - this.x0) {
+			this.speed.x = -5;
+		} else this.speed.x = 0;
+
+		if (this.controls.right.pressed && this.pos.x > 400) {
+			this.game.velocity = 5;
+		} else this.game.velocity = 0;
+		this.pos.y += this.speed.y;
+		
+	
+
+		this.pos.x += this.speed.x;
+
 	}
 }
