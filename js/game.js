@@ -13,6 +13,8 @@ const Game = {
 		UP: 'KeyG'
 	},
 	pressed:undefined,
+	bossAparece: 3000,
+
 
 	init() {
 		const canvas = document.querySelector('canvas');
@@ -45,6 +47,7 @@ const Game = {
 	start() {
 		this.frameCounter = 0;
 		this.progress = 0;
+		this.bossAparece += Date.now(); 
 		this.animationLoopId = setInterval(() => {
 			this.clear();
 
@@ -66,8 +69,12 @@ const Game = {
 			this.scoreBoard.update(this.score);
 
 			if (this.isCollision()) this.gameOver();
+			
+			if (this.isCollisionBullet2()) this.gameOver();
 
 			if (this.isCollisionBullet()) console.log('Colisión bullet');
+			if (this.isCollisionBullet2()) console.log('Colisión bullet2 con boss');
+
 
 			this.clearObstacles();
 		}, 1000 / this.fps);
@@ -76,15 +83,15 @@ const Game = {
 	drawAll() {
 		this.background.draw();
 		
-
 		this.obstacles.forEach((obstacle) => {
 			obstacle.draw(this.frameCounter);
 		});
-
+        // this.boss.draw(this.frameCounter);
+		if (Date.now() > this.bossAparece) {
+			this.boss.draw(this.frameCounter);
+		}
 		this.player.draw(this.frameCounter);
-		this.boss.draw(this.frameCounter);
-	
-		
+			
 	},
 
 	moveAll() {
@@ -114,7 +121,7 @@ const Game = {
 				this.player.pos.y < obstacle.pos.y + obstacle.height
 		);
 	},
-
+ //////// --- ESTA COLOSIONA CON LOS ENEMIGOS ---
 	isCollisionBullet() {
 		return this.player.bullets.some((bullet) => {
 			return this.obstacles.some((obstacle) => {
@@ -135,6 +142,23 @@ const Game = {
 		});
 	},
 
+	isCollisionBullet2() {
+		return this.player.bullets2.some((bullet2) => {
+			const isCollision =
+				bullet2.pos.x - bullet2.radius > this.boss.pos.x &&
+				bullet2.pos.x + bullet2.radius < this.boss.pos.x + this.boss.width &&
+				bullet2.pos.y - bullet2.radius > this.boss.pos.y &&
+				bullet2.pos.y + bullet2.radius < this.boss.pos.y-100 + this.boss.height;
+	
+			if (isCollision) {
+				this.boss.health -= 1;
+				this.player.bullets2 = this.player.bullets2.filter((b) => b !== bullet2);
+			}
+	
+			return isCollision;
+		});
+	},
+	
 	generateObstacle() {
 		this.obstacles.push(new Obstacle(this));
 	},

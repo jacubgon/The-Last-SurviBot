@@ -8,7 +8,7 @@ class Boss {
 	this.img.currentFrame = 0;
 	this.img.frameCount = 1;
 
-	this.width = 246 ;
+	this.width = 350 ;
 	this.height = 280 ;
 
 	this.y0 = 50;

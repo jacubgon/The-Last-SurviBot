@@ -1,12 +1,12 @@
-class Bullet2 {
+class BulletBoss {
 	constructor(game) {
 		this.game = game;
 
-		const { player } = game;
+		const { boss } = game;
 
 		this.pos = {
-			x: player.pos.x + player.width,
-			y: player.pos.y,
+			x: boss.pos.x + boss.width,
+			y: boss.pos.y,
 		};
 
 		this.speed = {
@@ -22,7 +22,7 @@ class Bullet2 {
 
 		ctx.beginPath();
 		ctx.save();
-		ctx.fillStyle = 'red';
+		ctx.fillStyle = 'blue';
 		ctx.arc(this.pos.x-20, this.pos.y+50, this.radius, 0, Math.PI * 2);
 		ctx.fill();
 		ctx.restore();
