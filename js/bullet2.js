@@ -5,8 +5,8 @@ class Bullet2 {
 		const { player } = game;
 
 		this.pos = {
-			x: player.pos.x + player.width / 2,
-			y: player.pos.y,
+			x: player.pos.x + player.width -40,
+			y: player.pos.y+ player.height / 2,
 		};
 
 		this.speed = {

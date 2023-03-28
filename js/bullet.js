@@ -6,7 +6,7 @@ class Bullet {
 		console.log(player)
 
 		this.pos = {
-			x: player.pos.x + player.width,
+			x: player.pos.x + player.width-40,
 			y: player.pos.y + player.height / 2,
 		};
 

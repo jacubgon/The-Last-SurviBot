@@ -1,7 +1,7 @@
 class Boss {
 	constructor(x, y, game) {
 	this.game = game;
-	this.life = 3
+	this.life = 5
 
 	this.img = new Image();
 	this.img.src = 'assets/ovni.png';
