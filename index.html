@@ -19,9 +19,20 @@
 		
 
 		<style>
+
+			html {
+			box-sizing: border-box;
+			}
+			*, *:before, *:after {
+			box-sizing: inherit;
+			}
 			body {
 				margin: 0;
 				background-image: url(assets/fondito-weno.jpg) ;
+			
+			
+				height: 100vh;
+				overflow: hidden;
 
 			}
 			canvas {
@@ -63,6 +74,7 @@
 		</style>
 		<title>Document</title>
 	</head>
+	<body>
 	<main>
 		<h1>The Last SurviBot</h1>
 		<p>En un futuro no muy lejano, la humanidad enfrenta su peor pesadilla: una pandemia global que ha diezmado la población mundial. Los sobrevivientes luchan por encontrar una cura y reconstruir lo que queda de la civilización. Pero mientras tanto, un nuevo peligro emerge del horizonte. <br>
@@ -91,7 +103,7 @@
 	
 	
 	</main>
-	<body>
+
 		<canvas></canvas>
 	</body>
 </html>

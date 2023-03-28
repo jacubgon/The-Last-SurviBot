@@ -27,6 +27,9 @@ const Game = {
 
 		this.setup();
 		this.start();
+
+
+		
 	},
 
 	setup() {  
@@ -41,7 +44,9 @@ const Game = {
 		this.bsoGameOver = new Audio('assets/game over.wav')
 		this.bsoVictory = new Audio('assets/victoria.mp3')
 		
-		
+		this.velocity = 5
+		this.frameCounter = 0;
+		this.progress = 0;
 
 		this.obstacles = [];
 
@@ -52,22 +57,25 @@ const Game = {
 		
 	},
 
+	isBossTime() {
+		return this.progress > 600
+	},
+
 	start() {
-		this.frameCounter = 0;
-		this.progress = 0;
+		
 
 
 		this.animationLoopId = setInterval(() => {
 			this.clear();
-
+			
 			this.frameCounter++;
 		
 				this.score += 0.01;
             //ESTO FUNCIONA, SE PARA EL AVANCE DESPUES DE CONSEGUIR 10 PUNTOS
-			if(this.score > 10){
+			if(this.isBossTime()){
 				this.velocity = 0;
 			}
-			if(this.score > 10){
+			if(this.isBossTime()){
 				this.bso.pause()
 				this.bsoBoss.play()
 			}
@@ -85,13 +93,30 @@ const Game = {
 
 			if (this.isCollision()) this.gameOver();
 			
-			if (this.isCollisionBulletBoss()) this.gameOver();
+			
 		
-			if (this.isCollisionBullet2()) this.youWin();
+			
+			// this.youWin();
 		
 
-			if (this.isCollisionBullet()) console.log('Colisión bullet');
-			if (this.isCollisionBullet2()) console.log('Colisión bullet2 con boss');
+			if (this.isCollisionBullet()) {
+				
+				// console.log('Colisión bullet');
+			}
+			
+
+			if(this.isBossTime()) {
+
+				if (this.isCollisionBullet2()) this.boss.damage() 
+				if (this.isCollisionBulletBoss()) this.gameOver();
+
+				if(this.frameCounter % 50 === 0){
+			
+					this.boss.shootboss();
+				}
+
+				
+			}
 			
 
 
@@ -106,10 +131,9 @@ const Game = {
 			obstacle.draw(this.frameCounter);
 		});
 		
-		if(this.score > 10){
+		if(this.isBossTime()){
 			this.boss.draw(this.frameCounter);
 			
-			if (this.frameCounter % 50 === 0) this.boss.shootboss();
 
 		}
 
@@ -129,7 +153,7 @@ const Game = {
 
 		this.player.move(this.frameCounter);
 		
-		if(this.score > 10){
+		if(this.isBossTime()){
 			this.player.movefinal(this.frameCounter)
 		};
 		
@@ -195,13 +219,18 @@ const Game = {
 
 
 	isCollisionBulletBoss() {
+		
+		
 		return this.boss.bulletsboss.some((bulletboss) => {
-			const isCollision =
-				bulletboss.pos.x - bulletboss.radius > this.player.pos.x &&
-				bulletboss.pos.x + bulletboss.radius < this.player.pos.x + this.player.width &&
-				bulletboss.pos.y - bulletboss.radius > this.player.pos.y &&
-				bulletboss.pos.y  + bulletboss.radius > this.player.pos.y - this.player.height;
-	
+			
+// console.log(`X bala: ${bulletboss.pos.x}, Y bala: ${bulletboss.pos.y}, r de la bala: ${bulletboss.radius}, X jugador: ${this.player.pos.x}, Y jugador: ${this.player.pos.y}, ancho jugador: ${this.player.width}`);	
+
+
+const isCollision =
+			    bulletboss.pos.x - bulletboss.radius < this.player.pos.x + this.player.width - 20 &&
+			    bulletboss.pos.x + bulletboss.radius > this.player.pos.x + 20 &&
+				bulletboss.pos.y + bulletboss.radius > this.player.pos.y + 50
+
 			if (isCollision) {
 				console.log('estoy colisionando bulletboss')
 				this.boss.bulletsboss = this.boss.bulletsboss.filter((b) => b !== bulletboss);

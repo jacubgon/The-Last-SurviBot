@@ -1,6 +1,7 @@
 class Boss {
 	constructor(x, y, game) {
 	this.game = game;
+	this.life = 3
 
 	this.img = new Image();
 	this.img.src = 'assets/ovni.png';
@@ -10,7 +11,7 @@ class Boss {
 
 	this.width = 350 ;
 	this.height = 280 ;
-	this.health = 5;
+	
 
 	this.y0 = 50;
 
@@ -29,6 +30,15 @@ class Boss {
 	this.bulletsboss = [];
 	console.log(this.bulletsboss)
 }
+damage(){
+	this.life--
+	if(!this.life){
+		this.game.youWin()
+	} 
+	
+
+	
+}
 draw(frameCounter) {
 	const { ctx } = this.game;
 
@@ -46,21 +56,22 @@ draw(frameCounter) {
 		this.height,
 	);
 
-	this.bulletsboss = this.bulletsboss.filter((bulletboss) => bulletboss.pos.y - bulletboss.radius);
+	this.bulletsboss = this.bulletsboss.filter((bulletboss) => bulletboss.pos.y - bulletboss.radius < this.game.height);
 
 	this.bulletsboss.forEach((bulletboss) => {
 	
 		bulletboss.draw();
 		bulletboss.move();
 		
-	
 	});
 }
 
 	shootboss() {
 		
 		this.bulletsboss.push(new BulletBoss(this.game));
-		console.log('el boss esta disparando')
+		// console.log('el boss esta disparando')
+
+		console.log(this.bulletsboss)
     }
 
     animateSprite(frameCounter) {

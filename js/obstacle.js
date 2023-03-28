@@ -29,10 +29,10 @@ class Obstacle {
 			0,
 			this.img.width / this.img.frameCount,
 			this.img.height,
-			this.pos.x -20,
-			this.pos.y -10,
-			this.width + 10,
-			this.height + 10,
+			this.pos.x,
+			this.pos.y,
+			this.width,
+			this.height ,
 		);}
 	animateSprite(frameCounter) {
 		if (frameCounter % 6=== 0) {
@@ -44,9 +44,10 @@ class Obstacle {
 	}
 
 	move() {
-		if(this.pos.x -= this.game.velocity){
-        this.speed = -this.speed++;
-		};
+		this.speed.x =  (this.game.velocity) ? 8 : 3
+		
+		this.pos.x -= this.speed.x
+	
 		
 	}
 }

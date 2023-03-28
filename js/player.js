@@ -67,7 +67,7 @@ class Player {
 	setCotrols() {
 		const { JUMP, SHOOT, LEFT, RIGHT, UP } = this.game.keys;
 
-		
+		this.disparo = new Audio ('assets/disparo.mp3')
 		addEventListener('keydown', ({ code }) => {
 			switch (code) {
 				case JUMP:
@@ -90,7 +90,7 @@ class Player {
 				case SHOOT:
 					this.game.pressed = 'KeyF'
 					this.shoot();
-		            this.disparo = new Audio ('assets/disparo.mp3')
+		           
 					this.disparo.play()
 					break;
 			}
@@ -140,6 +140,11 @@ class Player {
 
 		this.bullets = this.bullets.filter(
 			(bullet) => bullet.pos.x - bullet.radius < this.game.width
+			
+		);
+
+		this.bullets2 = this.bullets2.filter(
+			(bullet) => bullet.pos.y - bullet.radius > 0
 			
 		);
 		

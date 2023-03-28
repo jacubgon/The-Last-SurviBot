@@ -3,11 +3,11 @@ class Bullet {
 		this.game = game;
      
 		const { player } = game;
-		
+		console.log(player)
 
 		this.pos = {
 			x: player.pos.x + player.width,
-			y: player.pos.y,
+			y: player.pos.y + player.height / 2,
 		};
 
 		this.speed = {
@@ -24,7 +24,7 @@ class Bullet {
 		ctx.beginPath();
 		ctx.save();
 		ctx.fillStyle = 'yellow';
-		ctx.arc(this.pos.x-40, this.pos.y+80, this.radius, 0, Math.PI * 2);
+		ctx.arc(this.pos.x, this.pos.y, this.radius, 0, Math.PI * 2);
 		ctx.fill();
 		ctx.restore();
 		ctx.closePath();

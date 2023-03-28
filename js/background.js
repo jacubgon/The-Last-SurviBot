@@ -29,10 +29,27 @@ class Background {
 			this.game.width,
 			this.game.height
 		);
+
+
+		this.game.ctx.drawImage(
+			this.img,
+			this.x + this.game.width * 2,
+			this.y,
+			this.game.width,
+			this.game.height
+		);
+
+		this.game.ctx.drawImage(
+			this.imgReverse,
+			this.x + this.game.width * 3,
+			this.y,
+			this.game.width,
+			this.game.height
+		);
 	}
 
 	move() {
-		if (this.x - this.game.velocity <= -this.game.width) {
+		if (this.x + this.game.velocity <= -(this.game.width * 2)) {
 			this.x = 0;
 		}
 

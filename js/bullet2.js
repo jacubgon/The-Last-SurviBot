@@ -5,7 +5,7 @@ class Bullet2 {
 		const { player } = game;
 
 		this.pos = {
-			x: player.pos.x + player.width,
+			x: player.pos.x + player.width / 2,
 			y: player.pos.y,
 		};
 
@@ -23,7 +23,7 @@ class Bullet2 {
 		ctx.beginPath();
 		ctx.save();
 		ctx.fillStyle = 'yellow';
-		ctx.arc(this.pos.x-20, this.pos.y+50, this.radius, 0, Math.PI * 2);
+		ctx.arc(this.pos.x, this.pos.y, this.radius, 0, Math.PI * 2);
 		ctx.fill();
 		ctx.restore();
 		ctx.closePath();

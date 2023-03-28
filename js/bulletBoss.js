@@ -5,8 +5,8 @@ class BulletBoss {
 		const { boss } = game;
 
 		this.pos = {
-			x: boss.pos.x + boss.width,
-			y: boss.pos.y,
+			x: boss.pos.x + boss.width / 2,
+			y: boss.pos.y + boss.height,
 		};
 
 		this.speed = {
@@ -23,7 +23,7 @@ class BulletBoss {
 		ctx.beginPath();
 		ctx.save();
 		ctx.fillStyle = 'green';
-		ctx.arc(this.pos.x-150, this.pos.y+200, this.radius, 0, Math.PI * 2);
+		ctx.arc(this.pos.x, this.pos.y, this.radius, 0, Math.PI * 2);
 		ctx.fill();
 		ctx.restore();
 		ctx.closePath();
